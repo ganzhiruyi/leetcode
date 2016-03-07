@@ -1,21 +1,18 @@
 class Solution {
 public:
-    // static int dir[][2] = {0,1,1,0,0,-1,-1,0};
     vector<int> spiralOrder(vector<vector<int> >& matrix) {
         vector<int> ret;
         if(matrix.size() == 0) return ret;
-        int dir[][2] = {0,1,1,0,0,-1,-1,0};
-        int d = 0,m = matrix.size(),n = matrix[0].size();
-        int x = 0, y = 0;
-        ret.push_back(matrix[x][y]);
-        --n;
-        while(n){
-            if(d == 3) --n;
-            for(int i = 0;i < n;++i){
-                x += dir[d][0], y += dir[d][1];
-                ret.push_back(matrix[x][y]);
-            }
-            d = (d+1)%4;
+        int m = matrix.size(),n = matrix[0].size();
+        int x1 = 0,y1 = 0,x2 = m-1,y2 = n-1;
+        while(x1<=x2 && y1<=y2){
+            for(int i = y1;i <= y2;++i) ret.push_back(matrix[x1][i]);   // up row
+            for(int i = x1+1;i <= x2;++i) ret.push_back(matrix[i][y2]); // right col
+            if(x1 != x2) // 如果只有一行，up row已经遍历了行
+                for(int i = y2-1;i >= y1;--i) ret.push_back(matrix[x2][i]); // bottom row 
+            if(y1 != y2) // 如果只有一列，right col 已经遍历了列
+                for(int i = x2-1;i > x1;--i) ret.push_back(matrix[i][y1]);  // left col
+            ++x1,++y1,--x2,--y2;
         }
         return ret;
     }
