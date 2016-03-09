@@ -11,8 +11,8 @@ public:
         }
         k %= n;
         if(!k) return head;
-        int cnt = 1;
-        r = head->next;
+        int cnt = 0;
+        r = head;
         while(r){
             ++cnt;
             if(cnt == n-k){
