@@ -24,3 +24,26 @@ public:
         return inorder;
     }
 };
+// 非递归版本
+class Solution {
+public:
+    stack<TreeNode*> st;
+    vector<int> inorderTraversal(TreeNode* root) {
+        while(!st.empty()) st.pop();
+        vector<int> ret;
+        if(root == NULL) return ret;
+        TreeNode *cur = root;
+        while(cur || !st.empty()){
+            while(cur){ // 先一直往左走
+                st.push(cur);
+                cur = cur->left;
+            }
+            cur = st.top();
+            st.pop();
+            ret.push_back(cur->val);
+            cur = cur->right;            
+        }
+        return ret;
+    }
+};
+
