@@ -37,7 +37,7 @@ public:
             slow = head,fast = newHead;
             while(slow != preSlow->next){
                 if(slow->val != fast->val){
-                    preSlow->next = reverseList(newHead)；
+                    preSlow->next = reverseList(newHead);
                     return false;
                 }
                 slow = slow->next,fast = fast->next;

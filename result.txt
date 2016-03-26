@@ -1,0 +1,1012 @@
+diff --git a/Add Digits.cpp b/Add Digits.cpp
+deleted file mode 100644
+index 986aae5..0000000
+--- a/Add Digits.cpp	
++++ /dev/null
+@@ -1,6 +0,0 @@
+-class Solution {
+-public:
+-    int addDigits(int num) {
+-        return (num-1)%9+1;
+-    }
+-};
+diff --git a/Add and Search Word - Data structure design.cpp b/Add and Search Word - Data structure design.cpp
+deleted file mode 100644
+index be60c30..0000000
+--- a/Add and Search Word - Data structure design.cpp	
++++ /dev/null
+@@ -1,80 +0,0 @@
+-#include <bits/stdc++.h>
+-using namespace std;
+-class TrieNode {
+-public:
+-    // Initialize your data structure here.
+-    TrieNode* next[26];
+-    bool isWord;
+-    TrieNode() {
+-        isWord = false;
+-        memset(next,NULL,sizeof(next));
+-    }
+-};
+-
+-class Trie {
+-public:
+-    Trie() {
+-        root = new TrieNode();
+-    }
+-
+-    // Inserts a word into the trie.
+-    void insert(string word) {
+-        int idx,i = 0,n = word.length();
+-        TrieNode *p = root;
+-        while(i < n){
+-            idx = word[i]-'a';
+-            if(!p->next[idx]) p->next[idx] = new TrieNode();
+-            p = p->next[idx];
+-            ++i;
+-        }
+-        p->isWord = true;
+-    }
+-    bool find(TrieNode *rt,string word){
+-        TrieNode *p = rt;
+-        int idx,i = 0,n = word.length();
+-        while(i < n){
+-            if(word[i] == '.'){
+-                for(int j = 0;j < 26;++j){
+-                    if(!p->next[j]) continue;
+-                    // 这里不要写p=p->next[j],不然j第二次循环就不是原来的p了;
+-                    if(i == n-1 && p->next[j]->isWord) return true; // word的末尾是'.'且p是单词节点
+-                    if(find(p->next[j],word.substr(i+1,n-i-1))) return true;
+-                }
+-                return false;
+-            }
+-            else{
+-                idx = word[i]-'a';
+-                if(!p->next[idx]) return false;
+-                p = p->next[idx];
+-                ++i;
+-            }
+-        }
+-        return p->isWord;
+-    }
+-    bool search(string word){
+-        return find(root,word);
+-    }
+-private:
+-    TrieNode* root;
+-};
+-class WordDictionary {
+-public:
+-    Trie trie;
+-    WordDictionary(){
+-        trie = Trie();
+-    }
+-    // Adds a word into the data structure.
+-    void addWord(string word) {
+-        trie.insert(word);
+-    }
+-    // Returns if the word is in the data structure. A word could
+-    // contain the dot character '.' to represent any one letter.
+-    bool search(string word) {
+-        return trie.search(word);
+-    }
+-};
+-
+-// Your WordDictionary object will be instantiated and called as such:
+-// WordDictionary wordDictionary;
+-// wordDictionary.addWord("word");
+-// wordDictionary.search("pattern");
+diff --git a/Contains Duplicate II.cpp b/Contains Duplicate II.cpp
+deleted file mode 100644
+index 1dec0d1..0000000
+--- a/Contains Duplicate II.cpp	
++++ /dev/null
+@@ -1,14 +0,0 @@
+-class Solution {
+-public:
+-    bool containsNearbyDuplicate(vector<int>& nums, int k) {
+-        map<int,int> mp;
+-        for(int i = 0;i < nums.size();++i){
+-            if(mp.find(nums[i]) != mp.end()){
+-                if(i-mp[nums[i]] <= k) return true;
+-                else mp[nums[i]] = i;
+-            }
+-            else mp[nums[i]] = i;
+-        }
+-        return false;
+-    }
+-};
+diff --git a/Contains Duplicate III.cpp b/Contains Duplicate III.cpp
+deleted file mode 100644
+index 2ee5398..0000000
+--- a/Contains Duplicate III.cpp	
++++ /dev/null
+@@ -1,16 +0,0 @@
+-class Solution {
+-public:
+-    typedef pair<int,int> pii;
+-    bool containsNearbyAlmostDuplicate(vector<int>& nums, int k, int t) {
+-        vector<pii> p;
+-        for(int i = 0;i < nums.size();++i) p.push_back(make_pair(nums[i],i));
+-        sort(p.begin(), p.end());
+-        for(int i = 0;i < nums.size();++i){
+-            int tmp = p[i].first+t;
+-            for(int j = i+1;j < nums.size() && p[j].first <= tmp;++j){
+-                if(abs(p[j].second-p[i].second) <= k) return true;
+-            }
+-        }
+-        return false;
+-    }
+-};
+diff --git a/Contains Duplicate.cpp b/Contains Duplicate.cpp
+deleted file mode 100644
+index 552b575..0000000
+--- a/Contains Duplicate.cpp	
++++ /dev/null
+@@ -1,16 +0,0 @@
+-class Solution {
+-public:
+-    bool containsDuplicate(vector<int>& nums) {
+-        map<int,int> mp;
+-        for(int i = 0;i < nums.size();++i)
+-            if(++mp[nums[i]] > 1) return true;
+-        return false;        
+-    }
+-};
+-// 版本二
+-class Solution {
+-public:
+-    bool containsDuplicate(vector<int>& nums) {
+-        hashmap<int,int>         
+-    }
+-};
+diff --git a/Delete Node in a Linked List.cpp b/Delete Node in a Linked List.cpp
+deleted file mode 100644
+index af6c0ba..0000000
+--- a/Delete Node in a Linked List.cpp	
++++ /dev/null
+@@ -1,10 +0,0 @@
+-class Solution {
+-public:
+-    void deleteNode(ListNode* node) {
+-        if(node == NULL || node->next == NULL) return;
+-        node->val = node->next->val;
+-        ListNode *tmp = node->next;
+-        node->next = node->next->next;
+-        free(tmp);
+-    }
+-};
+diff --git a/Excel Sheet Column Number.cpp b/Excel Sheet Column Number.cpp
+deleted file mode 100644
+index 40ac224..0000000
+--- a/Excel Sheet Column Number.cpp	
++++ /dev/null
+@@ -1,9 +0,0 @@
+-class Solution {
+-public:
+-    int titleToNumber(string s) {
+-        int ret = 0;
+-        for(int i = 0;i < s.length();++i)
+-            ret = ret*26+(s[i]-'A'+1);
+-        return ret;
+-    }
+-};
+diff --git a/Factorial Trailing Zeroes.cpp b/Factorial Trailing Zeroes.cpp
+deleted file mode 100644
+index 42280d4..0000000
+--- a/Factorial Trailing Zeroes.cpp	
++++ /dev/null
+@@ -1,11 +0,0 @@
+-class Solution {
+-public:
+-    int trailingZeroes(int n) {
+-        int cntFive = 0;
+-        while(n){
+-            n /= 5;
+-            cntFive += n;
+-        }
+-        return cntFive;
+-    }
+-};
+diff --git a/Happy Number.cpp b/Happy Number.cpp
+deleted file mode 100644
+index 2a8379f..0000000
+--- a/Happy Number.cpp	
++++ /dev/null
+@@ -1,35 +0,0 @@
+-class Solution {
+-public:
+-    int sum2(int x){
+-        int ret = 0;
+-        while(x){
+-            ret += (x%10)*(x%10);
+-            x /= 10;
+-        }
+-        return ret;
+-    }
+-    bool isHappy(int n) {
+-        /** 这段注释代码用于找出1-9中的Happy number,有1,7两个数
+-        int isok[10];
+-        map<int,int> mp;
+-        for(int i = 1;i <= 9;++i){
+-            mp.clear();
+-            isok[i] = 0;
+-            int k = i;
+-            while(k != 1){
+-                if(mp.find(k) == mp.end()){
+-                    mp[k] = 1;
+-                }
+-                else break;
+-                k = sum2(k);
+-            }
+-            if(k == 1) isok[i] = 1;
+-        }
+-        for(int i = 0;i < 10;++i) cout << i << ": " << isok[i] << endl;
+-        **/
+-        while(n > 9){
+-            n = sum2(n);
+-        }
+-        return n==1 || n==7;
+-    }
+-};
+diff --git a/House Robber.cpp b/House Robber.cpp
+deleted file mode 100644
+index 22585d3..0000000
+--- a/House Robber.cpp	
++++ /dev/null
+@@ -1,13 +0,0 @@
+-class Solution {
+-public:
+-    int rob(vector<int>& nums) {
+-        if(!nums.size()) return 0;
+-        int f[nums.size()][2];
+-        f[0][0] = 0,f[0][1] = nums[0];
+-        for(int i = 1;i < nums.size();++i){
+-            f[i][0] = max(f[i-1][0],f[i-1][1]);
+-            f[i][1] = f[i-1][0]+nums[i];
+-        }
+-        return max(f[nums.size()-1][0],f[nums.size()-1][1]);
+-    }
+-};
+diff --git a/Implement Queue using Stacks.cpp b/Implement Queue using Stacks.cpp
+deleted file mode 100644
+index c7314eb..0000000
+--- a/Implement Queue using Stacks.cpp	
++++ /dev/null
+@@ -1,34 +0,0 @@
+-class Queue {
+-public:
+-    // Push element x to the back of queue.
+-    void push(int x) {
+-        st1.push(x);
+-    }
+-
+-    // Removes the element from in front of queue.
+-    void pop(void) {
+-        if(st2.empty())
+-            while(!st1.empty()){
+-                st2.push(st1.top());
+-                st1.pop();
+-            }
+-        st2.pop();
+-    }
+-
+-    // Get the front element.
+-    int peek(void) {
+-        if(st2.empty())
+-            while(!st1.empty()){
+-                st2.push(st1.top());
+-                st1.pop();
+-            }
+-        return st2.top();
+-    }
+-
+-    // Return whether the queue is empty.
+-    bool empty(void) {
+-        return st1.empty() && st2.empty();
+-    }
+-private:
+-    stack<int> st1,st2;
+-};
+diff --git a/Implement Stack using Queues.cpp b/Implement Stack using Queues.cpp
+deleted file mode 100644
+index d661c97..0000000
+--- a/Implement Stack using Queues.cpp	
++++ /dev/null
+@@ -1,38 +0,0 @@
+-class Stack {
+-public:
+-    // Push element x onto stack.
+-    void push(int x) {
+-        if(q1.empty()){
+-            q1.push(x);
+-            while(!q2.empty()){
+-                q1.push(q2.front());
+-                q2.pop();
+-            }
+-        }
+-        else{
+-            q2.push(x);
+-            while(!q1.empty()){
+-                q2.push(q1.front());
+-                q1.pop();
+-            }
+-        }
+-    }
+-
+-    // Removes the element on top of the stack.
+-    void pop() {
+-        if(q1.empty()) q2.pop();
+-        else q1.pop();
+-    }
+-
+-    // Get the top element.
+-    int top() {
+-        return q1.empty() ? q2.front() : q1.front();
+-    }
+-
+-    // Return whether the stack is empty.
+-    bool empty() {
+-        return q1.empty() && q2.empty();
+-    }
+-private:
+-    queue<int> q1,q2;
+-};
+diff --git a/Implement Trie (Prefix Tree).cpp b/Implement Trie (Prefix Tree).cpp
+deleted file mode 100644
+index 53b1be1..0000000
+--- a/Implement Trie (Prefix Tree).cpp	
++++ /dev/null
+@@ -1,62 +0,0 @@
+-#include <bits/stdc++.h>
+-using namespace std;
+-class TrieNode {
+-public:
+-    // Initialize your data structure here.
+-    TrieNode* next[26];
+-    bool isWord;
+-    TrieNode() {
+-        isWord = false;
+-        memset(next,NULL,sizeof(next));
+-    }
+-};
+-
+-class Trie {
+-public:
+-    Trie() {
+-        root = new TrieNode();
+-    }
+-
+-    // Inserts a word into the trie.
+-    void insert(string word) {
+-        int idx,i = 0,n = word.length();
+-        TrieNode *p = root;
+-        while(i < n){
+-            idx = word[i]-'a';
+-            if(!p->next[idx]) p->next[idx] = new TrieNode();
+-            p = p->next[idx];
+-            ++i;
+-        }
+-        p->isWord = true;
+-    }
+-
+-    // Returns if the word is in the trie.
+-    bool search(string word) {
+-        TrieNode *p = root;
+-        int idx,i = 0,n = word.length();
+-        while(i < n){
+-            idx = word[i]-'a';
+-            if(!p->next[idx]) return false;
+-            p = p->next[idx];
+-            ++i;
+-        }
+-        return p->isWord;
+-    }
+-
+-    // Returns if there is any word in the trie
+-    // that starts with the given prefix.
+-    bool startsWith(string prefix) {
+-        TrieNode *p = root;
+-        int idx,i = 0,n = prefix.length();
+-        while(i < n){
+-            idx = prefix[i]-'a';
+-            if(!p->next[idx]) return false;
+-            p = p->next[idx];
+-            ++i;
+-        }
+-        return true;
+-    }
+-
+-private:
+-    TrieNode* root;
+-};
+diff --git a/Increasing Triplet Subsequence.cpp b/Increasing Triplet Subsequence.cpp
+deleted file mode 100644
+index 07910f2..0000000
+--- a/Increasing Triplet Subsequence.cpp	
++++ /dev/null
+@@ -1,19 +0,0 @@
+-class Solution {
+-public:
+-    bool increasingTriplet(vector<int>& nums) {
+-        if(nums.size() < 3) return false;
+-        int first,second;
+-        /** first记录第一小的数，second记录第二小的数
+-        eg. 2,5,1,6
+-        **/
+-        first = nums[0],second = INT_MAX;
+-        for(int i = 1;i < nums.size();++i){
+-            if(nums[i] > second) return true;
+-            else{
+-                if(nums[i] > first) second = nums[i];
+-                else first = nums[i];
+-            }
+-        }
+-        return false;
+-    }
+-};
+diff --git a/Intersection of Two Linked Lists.cpp b/Intersection of Two Linked Lists.cpp
+deleted file mode 100644
+index 8c8c74f..0000000
+--- a/Intersection of Two Linked Lists.cpp	
++++ /dev/null
+@@ -1,26 +0,0 @@
+-class Solution {
+-public:
+-    int getNodeCnt(ListNode *head){
+-        int cnt = 0;
+-        while(head){
+-            head = head->next;
+-            ++cnt;
+-        }
+-        return cnt;
+-    }
+-    ListNode *getIntersectionNode(ListNode *headA, ListNode *headB) {
+-        int la = getNodeCnt(headA),lb = getNodeCnt(headB);
+-        if(la < lb){
+-            swap(headA,headB);
+-            swap(la,lb);
+-        }
+-        int diff = la-lb;
+-        while(diff--) headA = headA->next;
+-        while(headA){
+-            if(headA == headB) return headA;
+-            headA = headA->next;
+-            headB = headB->next;
+-        }
+-        return NULL;
+-    }
+-};
+diff --git a/Invert Binary Tree.cpp b/Invert Binary Tree.cpp
+deleted file mode 100644
+index c0c52f0..0000000
+--- a/Invert Binary Tree.cpp	
++++ /dev/null
+@@ -1,11 +0,0 @@
+-class Solution {
+-public:
+-    TreeNode* invertTree(TreeNode* root) {
+-        if(!root) return NULL;
+-        TreeNode *ls = invertTree(root->left);
+-        TreeNode *rs = invertTree(root->right);
+-        root->left = rs;
+-        root->right = ls;
+-        return root;
+-    }
+-};
+diff --git a/Longest Increasing Subsequence.cpp b/Longest Increasing Subsequence.cpp
+deleted file mode 100644
+index 048a94e..0000000
+--- a/Longest Increasing Subsequence.cpp	
++++ /dev/null
+@@ -1,46 +0,0 @@
+-// 版本一 O(n)
+-class Solution {
+-public:
+-    int lengthOfLIS(vector<int>& nums) {
+-        vector<int> lis(nums.size());
+-        for(int i = 0;i < nums.size();++i){
+-            lis[i] = 1;
+-            for(int j = 0;j < i;++j){
+-                if(nums[j]<nums[i])
+-                    lis[i] = max(lis[i],lis[j]+1);
+-            }
+-        }
+-        int ret = 0;
+-        for(int i = 0;i < nums.size();++i)
+-            ret = max(ret,lis[i]);
+-        return ret;
+-    }
+-};
+-// 版本二 O(nlogn)
+-class Solution {
+-public:
+-    int lengthOfLIS(vector<int>& nums) {
+-        if(!nums.size()) return 0;
+-        /**
+-        tailTable[i]表示第i个(长度为i+1)IS的末尾数字,
+-        tailTableCnt表示当前有了多少个IS串，
+-        如果要打印LIS，直接把[0,tailTableCnt)的tailTable[i]打印出来即可，
+-        这个顺序也是最短长度中字母顺序最小的
+-        **/
+-        int *tailTable = new int[nums.size()]; 
+-        int tailTableCnt = 1, n = nums.size();
+-        tailTable[0] = nums[0];
+-        for(int i = 1;i < n;++i){
+-            if(nums[i] < tailTable[0])
+-                tailTable[0] = nums[i];
+-            else if(nums[i] > tailTable[tailTableCnt-1])
+-                tailTable[tailTableCnt++] = nums[i];
+-            else{
+-                int idx = lower_bound(tailTable,tailTable+tailTableCnt,nums[i])-tailTable;
+-                tailTable[idx] = nums[i];
+-            }
+-        }
+-        delete[] tailTable;
+-        return tailTableCnt;
+-    }
+-};
+diff --git a/Longest Substring Without Repeating Characters b/Longest Substring Without Repeating Characters
+new file mode 100644
+index 0000000..acaf6de
+--- /dev/null
++++ b/Longest Substring Without Repeating Characters	
+@@ -0,0 +1,23 @@
++class Solution {
++public:
++    int lengthOfLongestSubstring(string s) {
++        // Start typing your C/C++ solution below
++        // DO NOT write int main() function
++        //思路：从头到尾扫一遍，维护一个[i,j]区间，该区间保证没有重复的字符，
++        //在每个位先把该字符的总数加1，检查当前的字符是否超过1，超过则前移指针i,
++        //同时更新前移过程中字符总数直到当前字符总数为1。记一个最大值每次比较。
++        int i = 0,j = 0,len = s.length();
++        if(len == 0) return 0;
++        map<char,int> M;
++        int maxLen = 0;
++        for(;j<len;j++){
++            M[s[j]]++;
++            while(M[s[j]] > 1){
++                M[s[i]]--;
++                i++;
++            }
++            maxLen = max(maxLen,j-i+1);
++        }
++        return maxLen;
++    }
++};
+diff --git a/Longest Substring Without Repeating Characters.cpp b/Longest Substring Without Repeating Characters.cpp
+deleted file mode 100644
+index acaf6de..0000000
+--- a/Longest Substring Without Repeating Characters.cpp	
++++ /dev/null
+@@ -1,23 +0,0 @@
+-class Solution {
+-public:
+-    int lengthOfLongestSubstring(string s) {
+-        // Start typing your C/C++ solution below
+-        // DO NOT write int main() function
+-        //思路：从头到尾扫一遍，维护一个[i,j]区间，该区间保证没有重复的字符，
+-        //在每个位先把该字符的总数加1，检查当前的字符是否超过1，超过则前移指针i,
+-        //同时更新前移过程中字符总数直到当前字符总数为1。记一个最大值每次比较。
+-        int i = 0,j = 0,len = s.length();
+-        if(len == 0) return 0;
+-        map<char,int> M;
+-        int maxLen = 0;
+-        for(;j<len;j++){
+-            M[s[j]]++;
+-            while(M[s[j]] > 1){
+-                M[s[i]]--;
+-                i++;
+-            }
+-            maxLen = max(maxLen,j-i+1);
+-        }
+-        return maxLen;
+-    }
+-};
+diff --git a/Lowest Common Ancestor of a Binary Search Tree.cpp b/Lowest Common Ancestor of a Binary Search Tree.cpp
+deleted file mode 100644
+index 13c88b4..0000000
+--- a/Lowest Common Ancestor of a Binary Search Tree.cpp	
++++ /dev/null
+@@ -1,11 +0,0 @@
+-class Solution {
+-public:
+-    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {
+-        if(root == p || root == q) return root;
+-        if(p->val < root->val && q->val < root->val)
+-            return lowestCommonAncestor(root->left,p,q);
+-        else if(p->val > root->val && q->val > root->val)
+-            return lowestCommonAncestor(root->right,p,q);
+-        return root;
+-    }
+-};
+diff --git a/Majority Element.cpp b/Majority Element.cpp
+deleted file mode 100644
+index 530738b..0000000
+--- a/Majority Element.cpp	
++++ /dev/null
+@@ -1,17 +0,0 @@
+-class Solution {
+-public:
+-    int majorityElement(vector<int>& nums) {
+-        int majority,cnt = 0;
+-        for(int i = 0;i < nums.size();++i)
+-            if(cnt == 0){
+-                majority = nums[i];
+-                ++cnt;
+-            }
+-            else{
+-                if(majority == nums[i]) ++cnt;
+-                else --cnt;
+-                if(cnt > nums.size()/2) return majority;
+-            }
+-        return majority;
+-    }
+-};
+diff --git a/Min Stack.cpp b/Min Stack.cpp
+deleted file mode 100644
+index 31fe3f5..0000000
+--- a/Min Stack.cpp	
++++ /dev/null
+@@ -1,37 +0,0 @@
+-class MinStack {
+-public:
+-    void push(int x) {
+-        if(v.empty()){
+-            minValue = x;
+-            minValueCnt = 1;
+-        }
+-        else{
+-            if(x == minValue) ++minValueCnt;
+-            else if(x < minValue) minValue = x,minValueCnt = 1;
+-        }
+-        v.push_back(x);
+-    }
+-
+-    void pop() {
+-        if(v.empty()) return;
+-        if(v.back() == minValue) --minValueCnt;
+-        v.erase(v.end()-1);
+-        if(!minValueCnt && !v.empty()){
+-            minValue = v[0],minValueCnt = 1;
+-            for(int i = 1;i < v.size();++i)
+-                if(v[i] == minValue) ++minValueCnt;
+-                else if(v[i] < minValue) minValue = v[i],minValueCnt = 1;
+-        }
+-    }
+-
+-    int top() {
+-        return v.back();
+-    }
+-
+-    int getMin() {
+-        return minValue;
+-    }
+-private:
+-    vector<int> v;
+-    int minValue,minValueCnt;
+-};
+diff --git a/Move Zeroes.cpp b/Move Zeroes.cpp
+deleted file mode 100644
+index 7e151ba..0000000
+--- a/Move Zeroes.cpp	
++++ /dev/null
+@@ -1,13 +0,0 @@
+-class Solution {
+-public:
+-    void moveZeroes(vector<int>& nums) {
+-        int l = 0,r = 0;
+-        while(r < nums.size()){
+-            if(nums[r]){
+-                if(!nums[l]) swap(nums[l++],nums[r]);
+-            }
+-            else if(nums[l]) l = r;
+-            ++r;
+-        }
+-    }
+-};
+diff --git a/Number of 1 Bits.cpp b/Number of 1 Bits.cpp
+deleted file mode 100644
+index 2c5dc5b..0000000
+--- a/Number of 1 Bits.cpp	
++++ /dev/null
+@@ -1,11 +0,0 @@
+-class Solution {
+-public:
+-    int hammingWeight(uint32_t n) {
+-        int ans = 0;
+-        while(n){
+-            ans += (n&1);
+-            n >>= 1;
+-        }
+-        return ans;
+-    }
+-};
+diff --git a/Odd Even Linked List.cpp b/Odd Even Linked List.cpp
+deleted file mode 100644
+index 5603282..0000000
+--- a/Odd Even Linked List.cpp	
++++ /dev/null
+@@ -1,17 +0,0 @@
+-class Solution {
+-public:
+-    ListNode* oddEvenList(ListNode* head) {
+-        if(!head || !head->next) return head;
+-        ListNode *odd = head,*even = head->next,*tmp = even,*p = head->next->next;
+-        bool isOddNode = true;
+-        while(p){
+-            if(isOddNode) odd->next = p,odd = p;
+-            else even->next = p,even = p;
+-            isOddNode = !isOddNode; 
+-            p = p->next;
+-        }
+-        even->next = NULL; // 这句一定要加
+-        odd->next = tmp;
+-        return head;
+-    }
+-};
+diff --git a/Power of Three.cpp b/Power of Three.cpp
+deleted file mode 100644
+index 8a34b13..0000000
+--- a/Power of Three.cpp	
++++ /dev/null
+@@ -1,24 +0,0 @@
+-class Solution {
+-public:
+-    bool isPowerOfThree(int n) {
+-        if(n < 1) return false;
+-        while(n != 1){
+-            if(n % 3) return false;
+-            n /= 3;
+-        }
+-        return true;
+-    }
+-};
+-class Solution {
+-public:
+-    bool isPowerOfThree(int n) {
+-        /**计算maxPowerOfThree
+-        int k = 1;
+-        while(k < INT_MAX/3) k *= 3;
+-        cout << k << endl;
+-        **/
+-        int maxPowerOfThree = 1162261467;
+-        if(n <= 0) return false;
+-        return maxPowerOfThree%n == 0;
+-    }
+-};
+diff --git a/Power of Two.cpp b/Power of Two.cpp
+deleted file mode 100644
+index 0aa5138..0000000
+--- a/Power of Two.cpp	
++++ /dev/null
+@@ -1,24 +0,0 @@
+-// 二分的思想,不断找左边l位和右边r位是否为0
+-class Solution {
+-public:
+-    bool isPowerOfTwo(int n) {
+-        int l,r,bits = 16;
+-        if(n == INT_MAX || n == INT_MIN) return false;
+-        while(bits){
+-            l = n>>bits;
+-            r = n-(l<<bits);
+-            if((l && r) || (!l && !r)) return false;
+-            if(l) n = l;
+-            else n = r;
+-            bits >>= 1;
+-        }
+-        return true;
+-    }
+-};
+-// 直接利用只有一个1用n&(n-1)，为0则是，否则不是
+-class Solution {
+-public:
+-    bool isPowerOfTwo(int n) {
+-        return n > 0 && !(n&n-1);
+-    }
+-};
+diff --git a/Rectangle Area.cpp b/Rectangle Area.cpp
+deleted file mode 100644
+index a912a89..0000000
+--- a/Rectangle Area.cpp	
++++ /dev/null
+@@ -1,18 +0,0 @@
+-class Solution {
+-public:
+-    typedef pair<int,int> pii;
+-    int cover(pii a,pii b){
+-        // 返回线段a和线段b覆盖的长度,要考虑一条线段包含另一条的情况
+-        if(b.first<=a.first && a.second<=b.second) return a.second-a.first;
+-        if(a.first<=b.first && b.second<=a.second) return b.second-b.first;
+-        return min(a.second-b.first,b.second-a.first);
+-    }
+-    int computeArea(int A, int B, int C, int D, int E, int F, int G, int H) {
+-        int s1 = abs(A-C)*abs(B-D),s2 = abs(E-G)*abs(F-H);
+-        if(s1 == 0 || s2 == 0) return s1+s2; // 处理其中一个矩形为点或者线，面积为0
+-        if(G>A&&C>E && H>B&&D>F){ // 两个矩形相交
+-            return s1+s2-cover(make_pair(A,C),make_pair(E,G))*cover(make_pair(B,D),make_pair(F,H));
+-        }
+-        else return s1+s2;     
+-    }
+-};
+diff --git a/Reorder List.cpp b/Reorder List.cpp
+deleted file mode 100644
+index 79cbcd3..0000000
+--- a/Reorder List.cpp	
++++ /dev/null
+@@ -1,50 +0,0 @@
+-class Solution {
+-public:
+-    void print(ListNode *head){
+-        if(head == NULL) return;
+-        while(head){
+-            printf("%d->", head->val);
+-            head = head->next;
+-        }
+-        printf("\n");
+-    }
+-    ListNode *reverseList(ListNode *head){
+-        if(head == NULL) return NULL;
+-        ListNode *tmp,*pre = NULL;
+-        while(head){
+-            tmp = head->next;
+-            head->next = pre;
+-            pre = head;
+-            head = tmp;
+-        }
+-        return pre;
+-    }
+-    void reorderList(ListNode* head) {
+-        if(head == NULL || head->next == NULL) return;
+-        ListNode *fast = head,*slow = head,*preSlow = NULL;
+-        while(fast && fast->next){
+-            fast = fast->next->next;
+-            preSlow = slow;
+-            slow = slow->next;
+-        }
+-        ListNode *head2;
+-        if(fast){ // 奇数个节点
+-            head2 = reverseList(slow->next);
+-            slow->next = NULL;
+-        }
+-        else{ // 偶数个节点
+-            head2 = reverseList(slow);
+-            preSlow->next = NULL;
+-        }
+-        fast = head,slow = head2;
+-        print(head);
+-        print(head2);
+-        while(slow){
+-            preSlow = fast->next;
+-            fast->next = slow;
+-            slow = slow->next;
+-            fast->next->next = preSlow;
+-            fast = preSlow;
+-        }
+-    }
+-};
+diff --git a/Reverse Linked List.cpp b/Reverse Linked List.cpp
+deleted file mode 100644
+index 3ca6e86..0000000
+--- a/Reverse Linked List.cpp	
++++ /dev/null
+@@ -1,13 +0,0 @@
+-class Solution {
+-public:
+-    ListNode* reverseList(ListNode* head) {
+-        ListNode *tmp = head,pre = NULL;
+-        while(head){
+-            tmp = head->next;
+-            head->next = pre;
+-            pre = head;
+-            head = tmp;
+-        }
+-        return pre;
+-    }
+-};
+diff --git a/Two Sum b/Two Sum
+new file mode 100644
+index 0000000..5106d8f
+--- /dev/null
++++ b/Two Sum	
+@@ -0,0 +1,27 @@
++class Solution {
++public:
++    vector<int> twoSum(vector<int> &numbers, int target) {
++        // Start typing your C/C++ solution below
++        // DO NOT write int main() function
++        vector<pair<int,int>> a;
++        a.clear();
++        for(int i = 0;i < numbers.size();i++){
++            a.push_back(make_pair(numbers[i],i+1));
++        }
++        sort(a.begin(),a.end());
++        int i = 0,j = numbers.size()-1;
++        while(i<j){
++            if(a[i].first+a[j].first==target){
++                vector<int> ans;
++                ans.clear();
++                ans.push_back(a[i].second);
++                ans.push_back(a[j].second);
++                sort(ans.begin(),ans.end());
++                return ans;
++            }
++            else if(a[i].first+a[j].first<target)
++                i++;
++            else j--;
++        }
++    }
++};
+diff --git a/Two Sum.cpp b/Two Sum.cpp
+deleted file mode 100644
+index 5106d8f..0000000
+--- a/Two Sum.cpp	
++++ /dev/null
+@@ -1,27 +0,0 @@
+-class Solution {
+-public:
+-    vector<int> twoSum(vector<int> &numbers, int target) {
+-        // Start typing your C/C++ solution below
+-        // DO NOT write int main() function
+-        vector<pair<int,int>> a;
+-        a.clear();
+-        for(int i = 0;i < numbers.size();i++){
+-            a.push_back(make_pair(numbers[i],i+1));
+-        }
+-        sort(a.begin(),a.end());
+-        int i = 0,j = numbers.size()-1;
+-        while(i<j){
+-            if(a[i].first+a[j].first==target){
+-                vector<int> ans;
+-                ans.clear();
+-                ans.push_back(a[i].second);
+-                ans.push_back(a[j].second);
+-                sort(ans.begin(),ans.end());
+-                return ans;
+-            }
+-            else if(a[i].first+a[j].first<target)
+-                i++;
+-            else j--;
+-        }
+-    }
+-};
+diff --git a/Ugly Number.cpp b/Ugly Number.cpp
+deleted file mode 100644
+index 8e9fdcf..0000000
+--- a/Ugly Number.cpp	
++++ /dev/null
+@@ -1,13 +0,0 @@
+-class Solution {
+-public:
+-    bool isUgly(int num) {
+-        if(num == 0) return false; // 0要特殊处理
+-        int factors[] = {2,3,5};
+-        for(int i = 0;i < 3;++i){
+-            while(num != 1 && num%factors[i]==0){
+-                num /= factors[i];
+-            }
+-        }
+-        return num==1;
+-    }
+-};
+diff --git a/Valid Anagram.cpp b/Valid Anagram.cpp
+deleted file mode 100644
+index 213a182..0000000
+--- a/Valid Anagram.cpp	
++++ /dev/null
+@@ -1,14 +0,0 @@
+-class Solution {
+-public:
+-    bool isAnagram(string s, string t) {
+-        if(s.length() != t.length()) return false;
+-        int cnt[26];
+-        memset(cnt,0,sizeof(cnt));
+-        for(int i = 0;i < s.length();++i) ++cnt[s[i]-'a'];
+-        for(int i = 0;i < t.length();++i)
+-            if(--cnt[t[i]-'a'] < 0) return false;
+-        for(int i = 0;i < 26;++i)
+-            if(cnt[i]) return false;
+-        return true;
+-    }
+-};
