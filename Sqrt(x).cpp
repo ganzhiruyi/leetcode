@@ -16,3 +16,18 @@ public:
         return ret;
     }
 };
+// 牛顿迭代法 next = cur/2+x/2/cur
+class Solution {
+public:
+    typedef long long ll;
+    int mySqrt(int x) {
+        if(x == 0) return 0;
+        double cur,next;
+        next = 1.0*x;
+        do{
+            cur = next;
+            next = cur/2.0+x/2.0/cur;
+        }while(abs(cur-next) > 0.0000001);
+        return int(cur);
+    }
+};
