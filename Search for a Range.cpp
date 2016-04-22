@@ -12,3 +12,26 @@ public:
         return v;
     }
 };
+class Solution {
+public:
+    vector<int> searchRange(vector<int>& nums, int target) {
+        vector<int> ret;
+        int mid,l = 0,r = nums.size()-1;
+        while(l < r){
+            mid = l+(r-l>>1);
+            if(nums[mid] >= target) r = mid;
+            else l = mid+1;
+        }
+        if(r == -1 || nums[r] != target)
+            return {-1,-1};
+        ret.push_back(r);
+        l = 0,r = nums.size();
+        while(l < r){
+            mid = l+(r-l>>1);
+            if(nums[mid] > target) r = mid;
+            else l = mid+1;
+        }
+        ret.push_back(r-1);
+        return ret;
+    }
+};

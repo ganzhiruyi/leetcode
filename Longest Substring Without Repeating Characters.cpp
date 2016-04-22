@@ -21,3 +21,21 @@ public:
         return maxLen;
     }
 };
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+        int n = s.length();
+        int alpha[1024],ret = 0;
+        memset(alpha,0,sizeof(alpha));
+        int start = 0;
+        for(int i = 0;i < n;++i){
+            while(start < i && alpha[s[i]]){
+                alpha[s[start]] = 0;
+                ++start;
+            }
+            alpha[s[i]] = 1;
+            ret = max(ret,i-start+1);
+        }
+        return ret;
+    }
+};

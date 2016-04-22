@@ -25,3 +25,26 @@ public:
         }
     }
 };
+// 版本二
+class Solution {
+public:
+    vector<int> twoSum(vector<int> &numbers, int target) {
+        typedef pair<int,int> pii;
+        vector<pii> v;
+        for(int i = 0;i < numbers.size();++i)
+            v.push_back(make_pair(numbers[i],i));
+        sort(v.begin(), v.end());
+        int first = 0,last = v.size()-1;
+        while(first < last){
+            if(v[first].first+v[last].first==target){
+                int a = v[first].second,b = v[last].second;
+                if(a < b) return {a,b}
+                else return {b,a};
+            }
+            else if(v[first].first+v[last].first>target)
+                --last;
+            else ++first;
+        }
+        return {}
+    }
+};

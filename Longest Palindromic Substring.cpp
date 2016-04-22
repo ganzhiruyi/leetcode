@@ -1,10 +1,10 @@
 #include <bits/stdc++.h>
 using namespace std;
-/**
 // time:O(n^2),space:O(n^2)
 class Solution {
 public:
     string longestPalindrome(string s) {
+        // dp[i][j]表示s[i,j]范围内的最长的回文子串
         //dp[i][j] = dp[i+1][j-1]&&s[i]==s[j]
         int len = s.length();
         if(len == 0) return s;
@@ -65,7 +65,6 @@ public:
         return s.substr(l,maxlen);
     }
 };
-**/
 // time:O(n),space:O(n)
 class Solution {
 public:
