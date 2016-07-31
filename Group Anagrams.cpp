@@ -52,6 +52,29 @@ public:
         return ans;
     }
 };
+class Solution {
+public:
+    vector<vector<string> > groupAnagrams(vector<string>& strs) {
+        unordered_set<string> hash;
+        sort(strs.begin(), strs.end());
+        unordered_map<string,int> mp;
+        vector<vector<string> > ret;
+        int cnt = 0;
+        for(int i = 0;i < strs.size();++i){
+            string ts = strs[i];
+            sort(ts.begin(), ts.end());
+            if(hash.find(ts)==hash.end()){
+                mp[ts] = cnt++;
+                hash.insert(ts);
+                ret.push_back({strs[i]});
+            }
+            else{
+                ret[mp[ts]].push_back(strs[i]);
+            }
+        }
+        return ret;
+    }
+};
 int main(){
     vector<string> str;
     string s;

@@ -35,3 +35,19 @@ public:
         return head;
     }
 };
+// 递归版本
+class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode* head) {
+        if(!head || !head->next) return head;
+        ListNode *st = head,*p = head->next;
+        while(p && p->val == st->val){
+            free(st);
+            st = p;
+            p = p->next;
+        }
+        if(st != head) return deleteDuplicates(p);
+        else head->next = deleteDuplicates(p);
+        return head; 
+    }
+};

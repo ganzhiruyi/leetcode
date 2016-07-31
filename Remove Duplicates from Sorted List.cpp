@@ -18,3 +18,17 @@ public:
         return head;        
     }
 };
+class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode* head) {
+        if(!head || !head->next) return head;
+        ListNode *st = head,*p = head->next;
+        while(p && p->val == st->val){
+            free(st);
+            st = p;
+            p = p->next;
+        }
+        st->next = deleteDuplicates(p);
+        return st;
+    }
+};
